@@ -2,7 +2,7 @@ name: Test the project and update the test-date
 
 on:
   schedule:
-    - cron: '0 */8 * * *'
+    - cron: '0 */12 * * *'
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 jobs:
@@ -18,6 +18,8 @@ jobs:
         run: |
           ACCOUNT=0
           KEY=1
+          SMALL_BUSINESS_KEY=1
+          EMAIL_API=developermail
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git clone --depth 1 https://github.com/rzc0d3r/ESET-KeyGen.git
@@ -30,17 +32,27 @@ jobs:
           then
           for ((attempt=1;attempt<=${ACCOUNT};++attempt))
           do
-          python3 main.py --chrome --account --email-api guerrillamail --skip-update-check
+          python3 main.py --chrome --account --email-api ${EMAIL_API} --skip-update-check --no-logo --disable-progress-bar
           done
           echo -e "\nAccounts generated:" >> $GITHUB_STEP_SUMMARY
           cat ./*ACCOUNTS.txt >> $GITHUB_STEP_SUMMARY
           fi
+          if [[ ${KEY} != 0 && ${SMALL_BUSINESS_KEY} != 0 ]]
+          then
           if [[ ${KEY} != 0 ]]
           then
           for ((attempt=1;attempt<=${KEY};++attempt))
           do
-          python3 main.py --chrome --key --email-api guerrillamail --skip-update-check
+          python3 main.py --chrome --key --email-api ${EMAIL_API} --skip-update-check --no-logo --disable-progress-bar
           done
+          fi
+          if [[ ${SMALL_BUSINESS_KEY} != 0 ]]
+          then
+          for ((attempt=1;attempt<=${SMALL_BUSINESS_KEY};++attempt))
+          do
+          python3 main.py --chrome --small-business-key --email-api ${EMAIL_API} --skip-update-check --no-logo --disable-progress-bar
+          done
+          fi
           echo -e "\nKeys generated:" >> $GITHUB_STEP_SUMMARY
           cat ./*KEYS.txt >> $GITHUB_STEP_SUMMARY
           fi
