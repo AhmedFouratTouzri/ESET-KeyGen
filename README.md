@@ -1,5 +1,5 @@
 # ESET-KeyGen
-ESET-KeyGen - Trial-Key & Account generator for ESET Antivirus (last test was on 10.11.2024 at 04:04 UTC+3)
+ESET-KeyGen - Trial-Key & Account generator for ESET Antivirus (last test was on 10.11.2024 at 15:22 UTC+3)
 
 ![](img/project_preview.png)
 
